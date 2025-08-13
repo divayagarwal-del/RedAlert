@@ -2,11 +2,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDb from './db/index.js';
+import complaintRoutes from './routes/complaint_routes.js';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> saurab_backend
 // Load environment variables
 dotenv.config();
 
@@ -15,6 +12,9 @@ const app = express();
 
 // Middleware (for JSON parsing)
 app.use(express.json());
+
+// Add complaint routes
+app.use('/api/complaints', complaintRoutes);
 
 // Connect to database
 connectDb();
@@ -29,7 +29,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> saurab_backend

@@ -13,6 +13,11 @@ const UserSchema = new mongoose.Schema(
             unique: true,
             trim: true,
         },
+          password: {
+            type: String,
+            required: true,
+            minlength: 6
+        },
         room_number:[
                 {
                     type: mongoose.Schema.Types.ObjectId,

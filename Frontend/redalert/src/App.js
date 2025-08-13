@@ -4,12 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import DataTable from './pages/DataTable';
+import Hero from "./pages/Hero"
 import 'antd/dist/reset.css';
 
 const App = () => (
   <Router>
     <Routes>
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<Hero />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/datatable" element={<DataTable />} />
     </Routes>

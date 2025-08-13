@@ -1,40 +1,47 @@
-import React from "react";
-import landing from "../assets/landingg.webp"
-export default function LandingPage() {
+import React from 'react';
+import { Box, Typography, Button, Container } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import landing from '../assets/landingg.webp';
+
+const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="h-screen flex flex-col font-sans">
+    <Container maxWidth={false} disableGutters sx={{ height: '100vh' }}>
       {/* Top Bar */}
-      <div className="flex justify-between items-center p-4">
-        <h1 className="text-red-600 text-2xl font-bold">RedAlert</h1>
-        <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-lg">
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 2 }}>
+        <Typography variant="h4" sx={{ color: '#d32f2f', fontWeight: 'bold' }}>
+          RedAlert
+        </Typography>
+        <Box sx={{ width: 40, height: 40, borderRadius: '50%', backgroundColor: '#e0e0e0', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.5rem' }}>
           👤
-        </div>
-      </div>
+        </Box>
+      </Box>
 
       {/* Main Content */}
-      <div className="flex flex-1">
+      <Box sx={{ display: 'flex', flex: 1 }}>
         {/* Left Section (40%) */}
-        <div className="w-2/5 flex flex-col justify-center items-center px-6">
-          <h2 className="text-3xl font-bold mb-8">Welcome to RedAlert Hotel</h2>
-          <div className="flex gap-4 w-full">
-            <button className="flex-1 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
-              Button 1
-            </button>
-            <button className="flex-1 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition">
-              Button 2
-            </button>
-          </div>
-        </div>
+        <Box sx={{ width: '40%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 3 }}>
+          <Typography variant="h3" sx={{ fontWeight: 'bold', marginBottom: 2 }}>
+            Welcome to RedAlert Hotel
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2, width: '100%' }}>
+            <Button variant="contained" color="primary" fullWidth sx={{ padding: '1rem' }} onClick={() => navigate('/dashboard')}>
+              Enter Dashboard
+            </Button>
+            <Button variant="outlined" color="secondary" fullWidth sx={{ padding: '1rem' }} onClick={() => navigate('/datatable')}>
+              View Data Table
+            </Button>
+          </Box>
+        </Box>
 
         {/* Right Section (60%) */}
-        <div className="w-3/5 bg-gray-100 flex items-center justify-center">
-  <img
-    src={landing}
-    alt="Hotel"
-    className="w-full h-full object-cover"
-  />
-</div>
-      </div>
-    </div>
+        <Box sx={{ width: '60%', backgroundColor: '#f5f5f5', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <img src={landing} alt="Hotel" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        </Box>
+      </Box>
+    </Container>
   );
-}
+};
+
+export default LandingPage;

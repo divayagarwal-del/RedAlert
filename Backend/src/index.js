@@ -2,7 +2,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDb from './db/index.js';
+import loginRoute from './routes/login_route.js';
 import complaintRoutes from './routes/complaint_routes.js';
+
+
 
 // Load environment variables
 dotenv.config();
@@ -13,11 +16,11 @@ const app = express();
 // Middleware (for JSON parsing)
 app.use(express.json());
 
-// Add complaint routes
-app.use('/api/complaints', complaintRoutes);
-
 // Connect to database
 connectDb();
+
+app.use("/api/login",loginRoute);
+app.use('/api/complaints', complaintRoutes);
 
 // Test route
 app.get('/', (req, res) => {

@@ -20,7 +20,7 @@ const SideNavbar = () => (
       '& .MuiDrawer-paper': {
         width: drawerWidth,
         boxSizing: 'border-box',
-        backgroundColor: '#ff0f0f', // Red background
+        background: 'linear-gradient(to bottom right, #991b1b, #dc2626)', // from-red-800 to-red-600
         color: '#fff',
       },
     }}
@@ -39,11 +39,8 @@ const SideNavbar = () => (
           component={NavLink}
           to={path}
           style={({ isActive }) => ({
-            backgroundColor: isActive ? '#d32f2f' : 'transparent', // Active link color
+            backgroundColor: isActive ? '#d32f2f' : 'transparent',
             color: isActive ? '#fff' : '#fff',
-            '&:hover': {
-              backgroundColor: '#d32f2f', // Hover effect
-            },
           })}
         >
           <ListItemIcon sx={{ color: 'inherit' }}>{icon}</ListItemIcon>
@@ -55,4 +52,3 @@ const SideNavbar = () => (
 );
 
 export default SideNavbar;
-

@@ -6,7 +6,7 @@ export default function App() {
       <ShinyText 
         text="RedAlert" 
         speed={16} 
-        className="text-[120px] font-bold" 
+        className="text-[120px] font-bold font-lobster" 
       />
     </div>
   );

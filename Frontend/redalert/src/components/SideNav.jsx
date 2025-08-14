@@ -52,7 +52,7 @@ const SideNavbar = () => {
             width: 'auto',
           }}
         />
-        <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
+        <Typography variant="h3" sx={{ fontWeight: 'bold' }} className='font-lobster '>
           RedAlert
         </Typography>
       </Box>

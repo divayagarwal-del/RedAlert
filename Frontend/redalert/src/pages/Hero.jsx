@@ -27,7 +27,7 @@ export default function Hero() {
           alt="RedAlert Logo"
           className="w-64 h-auto mx-auto mb-4"
         />
-        <ShinyText text="RedAlert" className="shiny-text text-4xl font-bold" />
+        <ShinyText text="RedAlert" className="shiny-text text-4xl font-bold font-lobster" />
 
       
         <p className="mt-4 font-bold text-lg md:text-2xl">Stay at Reddoorz</p>

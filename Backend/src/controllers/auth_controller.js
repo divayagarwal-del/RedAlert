@@ -1,6 +1,6 @@
 
 import mongoose from "mongoose";
-import {User} from "../models/user_models"
+import {User} from "../models/user_models.js"
 export const createUser = async (req, res) => {
   try {
     const { name, number, password } = req.body;

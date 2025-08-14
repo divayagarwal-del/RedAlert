@@ -21,6 +21,12 @@ export default function Hero() {
       {/* Foreground Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
         {/* <h1 className="text-5xl md:text-7xl font-bold">RedAlert</h1> */}
+
+         <img
+          src="/animal.png"
+          alt="RedAlert Logo"
+          className="w-64 h-auto mx-auto mb-4"
+        />
         <ShinyText text="RedAlert" className="shiny-text text-4xl font-bold" />
 
       

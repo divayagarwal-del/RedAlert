@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import DataTable from './pages/DataTable';
 import Hero from "./pages/Hero"
 import Issue1 from "./pages/Issue1"
+import Logs from "./pages/finallog"
 import 'antd/dist/reset.css';
 
 const App = () => (
@@ -14,7 +15,8 @@ const App = () => (
       <Route path="/" element={<Hero />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/datatable" element={<DataTable />} />
-       <Route path="/issue1" element={<Issue1 />} />
+      <Route path="/issue1" element={<Issue1 />} />
+      <Route path="/logs" element={<Logs />} /> 
     </Routes>
   </Router>
 );

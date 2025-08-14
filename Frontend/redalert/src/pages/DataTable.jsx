@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Table, Tag } from 'antd';
 import { Box, AppBar, Toolbar, Typography } from '@mui/material';
 import SideNavbar from '../components/SideNav';
+import { useNavigate } from 'react-router-dom';
 
 const DataTable = () => {
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,11 +14,10 @@ const DataTable = () => {
       const result = await response.json();
       setData(result);
     };
-
     fetchData();
   }, []);
 
-  const columns = [
+  const columns = useMemo(() => [
     {
       title: 'Customer Name',
       dataIndex: 'customerName',
@@ -61,14 +62,13 @@ const DataTable = () => {
       dataIndex: 'status',
       key: 'status',
       render: status => {
-        let color;
-        if (status === 'new') color = 'red';
-        else if (status === 'accepted') color = 'green';
-        else if (status === 'paused') color = 'gold';
+        let color = status === 'new' ? 'red' :
+                    status === 'accepted' ? 'green' :
+                    status === 'paused' ? 'gold' : 'default';
         return <Tag color={color}>{status.toUpperCase()}</Tag>;
       },
     },
-  ];
+  ], []);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -76,11 +76,7 @@ const DataTable = () => {
       <Box component="main" sx={{ flexGrow: 1 }}>
         <AppBar
           position="static"
-          sx={{
-            backgroundColor: 'white',
-            boxShadow: 0,
-            borderBottom: '4px solid red',
-          }}
+          sx={{ backgroundColor: 'white', boxShadow: 0, borderBottom: '4px solid red' }}
         >
           <Toolbar sx={{ display: 'flex', justifyContent: 'flex-start' }}>
             <Typography variant="h6" sx={{ color: 'red', fontWeight: 'bold' }}>
@@ -89,7 +85,20 @@ const DataTable = () => {
           </Toolbar>
         </AppBar>
         <Box sx={{ padding: 3 }}>
-          <Table columns={columns} dataSource={data} />
+          <Table
+            columns={columns}
+            dataSource={data}
+            rowKey="key"
+            onRow={(record) => ({
+              onClick: () => {
+                // For the first row, route to /issue1
+                
+                  navigate(`/issue${record.key}`);
+                
+              },
+            })}
+            style={{ cursor: 'pointer' }}
+          />
         </Box>
       </Box>
     </Box>

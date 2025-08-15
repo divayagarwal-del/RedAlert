@@ -49,8 +49,8 @@ const ReviewLogs = () => {
           value={rating}
           readOnly
           cancel={false}
-          className="red" // Tailwind if you use it
-            style={{ color: 'red' }} 
+          className="#AF8FE9" // Tailwind if you use it
+            style={{ color: '#AF8FE9' }} 
         />
       ),
     },
@@ -75,11 +75,11 @@ const ReviewLogs = () => {
           sx={{
             backgroundColor: 'white',
             boxShadow: 0,
-            borderBottom: '4px solid red'
+            borderBottom: '4px solid #AF8FE9'
           }}
         >
           <Toolbar>
-            <Typography variant="h6" sx={{ color: 'red', fontWeight: 'bold' }}>
+            <Typography variant="h6" sx={{ color: '#AF8FE9', fontWeight: 'bold' }}>
               Review Logs
             </Typography>
           </Toolbar>

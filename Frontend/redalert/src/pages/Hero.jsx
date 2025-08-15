@@ -10,7 +10,7 @@ export default function Hero() {
         <Silk
   speed={3}
   scale={1.1}
-  color="#8F1E24"
+  color="#AF8FE9"
   noiseIntensity={2}
   rotation={2.98}
 />
@@ -23,17 +23,17 @@ export default function Hero() {
         {/* <h1 className="text-5xl md:text-7xl font-bold">RedAlert</h1> */}
 
          <img
-          src="/animal.png"
+          src="/violet.png"
           alt="RedAlert Logo"
           className="w-64 h-auto mx-auto mb-4"
         />
-        <ShinyText text="RedAlert" className="shiny-text text-4xl font-bold font-lobster" />
+        <ShinyText text="Wisteria" className="shiny-text text-4xl font-bold font-lobster" />
 
       
         <p className="mt-4 font-bold text-lg md:text-2xl">Stay at Reddoorz</p>
         
         <div className="mt-8 flex space-x-4">
-          <button onClick={() => navigate('/dashboard')} className="px-6 py-3 bg-red-500 hover:bg-red-600 rounded-lg font-medium transition-colors">
+          <button onClick={() => navigate('/dashboard')} className="px-6 py-3 bg-[#864eee] hover:bg-[#AF8FE9] rounded-lg font-medium transition-colors">
             Dashboard
           </button>
           <button  onClick={() => navigate('/datatable')} className="px-6 py-3 bg-transparent border border-white hover:bg-white hover:text-black rounded-lg font-medium transition-colors">

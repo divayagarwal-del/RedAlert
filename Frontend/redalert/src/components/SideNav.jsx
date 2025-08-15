@@ -25,7 +25,7 @@ const SideNavbar = () => {
         '& .MuiDrawer-paper': {
           width: drawerWidth,
           boxSizing: 'border-box',
-          background: 'linear-gradient(to bottom right, #991b1b, #dc2626)',
+          background: 'linear-gradient(to bottom right, #E5CDFB, #AF8FE9)',
           color: '#fff',
         },
       }}
@@ -45,7 +45,7 @@ const SideNavbar = () => {
       >
         <Box
           component="img"
-          src="/animal.png"
+          src="/violet.png"
           alt="RedAlert Logo"
           sx={{
             height: '5.2em',
@@ -53,7 +53,7 @@ const SideNavbar = () => {
           }}
         />
         <Typography variant="h3" sx={{ fontWeight: 'bold' }} className='font-lobster '>
-          RedAlert
+          Wisteria
         </Typography>
       </Box>
       <Divider sx={{ borderColor: '#fff' }} />
@@ -65,7 +65,7 @@ const SideNavbar = () => {
             component={NavLink}
             to={path}
             style={({ isActive }) => ({
-              backgroundColor: isActive ? '#d32f2f' : 'transparent',
+              backgroundColor: isActive ? '#AF8FE9' : 'transparent',
               color: '#fff',
             })}
           >

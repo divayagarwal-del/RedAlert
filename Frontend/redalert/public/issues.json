@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Air Conditioner Not Working",
+    "tags": [
+      { "text": "Open", "color": "bg-green-200 text-green-800" },
+      { "text": "High Priority", "color": "bg-[#af8fe9]/20 text-[#4f3a9a]" },
+      { "text": "Room 305", "color": "bg-blue-200 text-blue-800" }
+    ],
+    "description": "Dear Support Team,\n\nI am currently staying in Room 305 and would like to report that the air conditioning unit is not functioning. Despite adjusting the settings and turning it on and off multiple times, the temperature in the room remains uncomfortably warm. The lack of cooling has made it difficult to rest at night, especially with the high humidity outside.\n\nAdditionally, the unit is making a faint rattling noise when powered on, which suggests there may be a loose component or fan issue. I kindly request that maintenance be sent to inspect and repair the unit as soon as possible so I can continue my stay comfortably.\n\nThank you for your prompt attention.",
+    "timestamp": "2025-08-13 14:35",
+    "images": ["/hotel1.jpg", "/hotel2.jpg"]
+  },
+  {
+    "id": 2,
+    "title": "Leaking Bathroom Faucet",
+    "tags": [
+      { "text": "Open", "color": "bg-green-200 text-green-800" },
+      { "text": "Medium Priority", "color": "bg-yellow-200 text-yellow-800" },
+      { "text": "Room 412", "color": "bg-blue-200 text-blue-800" }
+    ],
+    "description": "Hello,\n\nSince checking into Room 412 yesterday evening, I’ve noticed the bathroom sink faucet has a persistent leak. Even when the handle is tightly closed, water continues to drip steadily into the sink, causing a constant noise and minor splashing. The water also tends to pool slightly around the base of the faucet.\n\nWhile the leak is not causing flooding, it is inconvenient and could potentially waste a significant amount of water over time. I would appreciate it if a maintenance technician could examine and fix the faucet at the earliest opportunity.\n\nBest regards.",
+    "timestamp": "2025-08-14 09:12",
+    "images": ["/hotel1.jpg", "/hotel2.jpg"]
+  },
+  {
+    "id": 3,
+    "title": "Wi-Fi Connectivity Issues",
+    "tags": [
+      { "text": "Open", "color": "bg-green-200 text-green-800" },
+      { "text": "High Priority", "color": "bg-[#af8fe9]/20 text-[#4f3a9a]" },
+      { "text": "Room 221", "color": "bg-blue-200 text-blue-800" }
+    ],
+    "description": "Dear Hotel IT Support,\n\nDuring my stay in Room 221, I’ve experienced unstable Wi-Fi connectivity. The internet signal drops every 10–15 minutes, forcing me to reconnect multiple times. This has made it difficult to attend virtual meetings and complete my work assignments.\n\nI’ve tried switching between the available hotel networks and restarting my devices, but the problem persists. I believe the issue might be with the access point serving my floor.\n\nGiven the importance of a stable internet connection for both leisure and business guests, I hope this can be resolved quickly.\n\nThank you for your assistance.",
+    "timestamp": "2025-08-14 11:47",
+    "images": ["/hotel1.jpg", "/hotel2.jpg"]
+  },
+  {
+    "id": 4,
+    "title": "Broken Television Remote",
+    "tags": [
+      { "text": "Open", "color": "bg-green-200 text-green-800" },
+      { "text": "Low Priority", "color": "bg-gray-200 text-gray-800" },
+      { "text": "Room 518", "color": "bg-blue-200 text-blue-800" }
+    ],
+    "description": "Hi,\n\nI wanted to report that the television remote in my room (Room 518) appears to be non-functional. None of the buttons register a response, even after replacing the batteries. The TV works fine when using the manual controls on the unit, but this is inconvenient as the controls are located on the side and are not easily accessible from the bed.\n\nIf possible, could you please replace the remote or provide a universal remote that is compatible with the TV model in my room?\n\nThanks in advance.",
+    "timestamp": "2025-08-14 17:22",
+    "images": ["/hotel1.jpg", "/hotel2.jpg"]
+  },
+  {
+    "id": 5,
+    "title": "Room Lighting Malfunction",
+    "tags": [
+      { "text": "Open", "color": "bg-green-200 text-green-800" },
+      { "text": "Medium Priority", "color": "bg-yellow-200 text-yellow-800" },
+      { "text": "Room 402", "color": "bg-blue-200 text-blue-800" }
+    ],
+    "description": "Dear Maintenance,\n\nIn Room 402, the main ceiling light flickers intermittently. The flickering occurs regardless of whether the dimmer switch is set to low or high brightness. In addition, one of the bedside lamps does not turn on at all, even after checking that it’s plugged in and that the bulb is secure.\n\nThis lighting issue makes it difficult to work in the evenings and creates an uncomfortable atmosphere in the room. I would appreciate it if someone could check the wiring and replace any faulty bulbs or fixtures.\n\nThank you for your help.",
+    "timestamp": "2025-08-14 19:05",
+    "images": ["/hotel1.jpg", "/hotel2.jpg"]
+  }
+]

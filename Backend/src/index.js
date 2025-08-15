@@ -2,11 +2,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDb from './db/index.js';
-import loginRoute from './routes/login_route.js';
-import complaintRoutes from './routes/complaint_routes.js';
-import registerRoute from './routes/register_route.js';
-
-
+import userRoutes from "./routes/user_route.js";
+import cookieParser from "cookie-parser";
 
 // Load environment variables
 dotenv.config();
@@ -14,15 +11,15 @@ dotenv.config();
 // Initialize app
 const app = express();
 
-// Middleware (for JSON parsing)
 app.use(express.json());
+app.use(cookieParser());
+
+// User routes
+app.use("/api/users", userRoutes);
 
 // Connect to database
-connectDb();
 
-app.use("/api/login",loginRoute);
-app.use('/api/complaints', complaintRoutes);
-app.use("/api/register",registerRoute);
+connectDb();
 // Test route
 app.get('/', (req, res) => {
   res.send('API is running...');

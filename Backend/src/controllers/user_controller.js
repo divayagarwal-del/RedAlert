@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user_models.js";
 import { Complaint } from "../models/complaint_models.js";
 import bookings from "../models/bookings.js";
+import { Review } from "../models/review_models.js";
 
 // REGISTER
 const register = async (req, res) => {
@@ -52,8 +53,9 @@ const login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "strict"
+      secure: false,           // true if using HTTPS
+      sameSite: "strict",
+      // maxAge: 10 * 1000        // 10 seconds in milliseconds
     });
 
     res.json({ message: "Login successful" });
@@ -153,6 +155,26 @@ async function closeComplaint(req, res) {
   }
 }
 
+async function addReview(req, res) {
+  const { complaintId } = req.params;
+  const { stars, description } = req.body;
+
+  // first take the review.. 
+  try {
+    const review = await new Review({ stars: stars, description: description });
+    await review.save();
+    const complaint = await Complaint.findById(complaintId);
+    complaint.review = review._id;
+    await complaint.save();
+    await complaint.populate("review");
+    res.status(200).json({ message: "review added sucessfully", review: review });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+
+}
+
 export default {
   login,
   register,
@@ -161,4 +183,5 @@ export default {
   closeComplaint,
   getBookings,
   getComplaints,
+  addReview
 }

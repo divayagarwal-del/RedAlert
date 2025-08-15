@@ -1,13 +1,13 @@
 // src/controllers/complaint_controller.js
 import bookings from "../models/bookings.js";
-import { Complaint } from "../models/complaint_model.js";
-import { User } from "../models/user_model.js";
+import { Complaint } from "../models/complaint_models.js";
+import { User } from "../models/user_models.js";
 
 async function acceptComplaint(req, res) {
     const { complaintId } = req.params;
     try {
         const updatedComplaint = await Complaint.findByIdAndUpdate(complaintId, {
-            status: 'Accepted'
+            status: "Accepted"
         })
 
         res.status(200).json({ message: 'Complaint Accepted successfully', complaint: updatedComplaint })
@@ -20,7 +20,7 @@ async function acceptComplaint(req, res) {
 }
 async function getComplaints(req, res) {
     try {
-        const complaints = await Complaint.find();
+        const complaints = await Complaint.find({});
         res.status(200).json({
             message: "User Complaints fetched successfully on admin",
             complaints
@@ -64,7 +64,7 @@ async function waitingComplaint(req, res) {
 
 async function listOfUsers(req, res) {
     try {
-        const users = await User.find();
+        const users = await User.find({});
         res.status(200).json({
             message: "User Complaints fetched successfully on admin",
             users

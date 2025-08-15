@@ -12,7 +12,6 @@ module.exports = {
     'text-yellow-800',
     'bg-gray-200',
     'text-gray-800',
-    'check'
     
   ],
   theme: {

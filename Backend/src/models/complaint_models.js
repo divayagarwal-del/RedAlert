@@ -35,6 +35,10 @@ const ComplaintSchema = new mongoose.Schema(
       type: String,
       enum: ['New', 'Accepted', 'Waiting', 'Finished'],
       default: "New"
+    },
+    review: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review",
     }
   },
   { timestamps: true }

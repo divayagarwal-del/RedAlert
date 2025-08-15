@@ -16,13 +16,7 @@ router.get("/getComplaints", authenticateToken, userController.getComplaints)
 router.get("/getComplaint/:complaintId", authenticateToken, userController.getComplaint);
 router.get("/getBookings", authenticateToken, userController.getBookings);
 router.post("/closeComplaint/:complaintId", authenticateToken, userController.closeComplaint);
+router.post("/addReview/:complaintId", authenticateToken, userController.addReview);
 
-// Protected route example
-router.get("/profile", authMiddleware, (req, res) => {
-  res.json({
-    message: `Hello ${req.user.username}`,
-    user: req.user
-  });
-});
 
 export default router;

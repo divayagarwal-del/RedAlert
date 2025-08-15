@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import connectDb from './db/index.js';
 import userRoutes from "./routes/user_route.js";
 import cookieParser from "cookie-parser";
-import adminRoutes from "./routes/auth_route.js";
+import adminRoutes from "./routes/admin_route.js";
 
 // Load environment variables
 dotenv.config();

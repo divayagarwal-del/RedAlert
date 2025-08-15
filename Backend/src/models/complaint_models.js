@@ -1,22 +1,43 @@
-import mongoose from "mongoose"
+// src/models/complaint_model.js
+import mongoose, { Mongoose } from "mongoose";
 
-const ComplaintSchema = new mongoose.Schema({
+const ComplaintSchema = new mongoose.Schema(
+  {
     title: {
-        type: String,
-        required : true,
+      type: String,
+      required: true,
+      trim: true
     },
+    tags: {
+      type: [String], // Array of tags
+      enum: ["Maintenance", "Cleanliness", "Food", "Staff", "Other"], // example tags
+      required: true
+    },
+    roomsIds: [
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Room"
+  }
+],
     description: {
-        type: String,
+      type: String,
+      required: true
     },
-    tags: [{type: String}],
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    issueTime: { type: Date, required: true },
-    solvedTime: { type: Date },
-    status: { type: String, enum: ['open', 'in-progress', 'resolved'], default: 'open' },
-    orderOrComp: { type: Boolean, required: true }, // true = order, false = complaint
-    image: { type: String }, // url
-    reviewId: { type: mongoose.Schema.Types.ObjectId, ref: 'Review' }
+    images: [{
+        type: String,
+    }],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    },
+    status: {
+      type: String,
+      enum: ['New', 'Accepted', 'Waiting','Finished'],
+      default: "New"
+    }
+  },
+  { timestamps: true }
+);
 
-})
-
-export const Complaint = mongoose.model("Complaint", ComplaintSchema)
+export const Complaint = mongoose.model("Complaint", ComplaintSchema);

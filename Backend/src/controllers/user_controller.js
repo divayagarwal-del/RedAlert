@@ -1,9 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {User }from "../models/user_models.js";
+import { Complaint } from "../models/complaint_models.js";
+import bookings from "../models/bookings.js";
 
 // REGISTER
-export const register = async (req, res) => {
+const register = async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -28,7 +30,7 @@ export const register = async (req, res) => {
 };
 
 // LOGIN
-export const login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -60,3 +62,102 @@ export const login = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+async function getComplaints(req, res) {
+  try{
+  const {id} = req.user;
+  const complaints = await Complaint.find({
+    user: id,
+  })
+
+  res.status(200).json({ 
+      message: "User Complaint fetched successfully", 
+      complaints
+    });
+  
+  }
+    catch(error) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+    }
+}
+
+
+async function getBookings(req, res) {
+try {
+const {id} = req.user;
+const bk = bookings.filter(booking=>booking.user === id);
+res.status(200).json({message: 'User bookings found successfully', bookings:bk})
+}
+catch(err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+    }
+}
+
+const registerComplaint = async (req, res) => {
+  try {
+    const { title, tags, description, photos, roomIds } = req.body;
+    const userId = req.user.id; // comes from auth middleware after JWT verify
+
+    const complaint = new Complaint({
+      title,
+      tags,
+      description,
+      user: userId
+    });
+
+    await complaint.save();
+
+    // Also store complaint reference in user's complaints array
+    await User.findByIdAndUpdate(userId, {
+      $push: { complaints: complaint._id }
+    });
+
+    res.status(201).json({ message: "Complaint registered successfully", complaint });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+async function getComplaint(req, res) {
+  const {complaintId} = req.params;
+  try{
+  const complaint = await Complaint.findById(complaintId)
+
+    res.status(200).json({ 
+      message: "User Complaint fetched successfully", 
+      complaint
+    });}
+    catch(error) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+    }
+}
+
+async function closeComplaint(req, res) {
+  const {complaintId} = req.params;
+
+  try{
+    const updatedComplaint = await Complaint.findByIdAndUpdate(complaintId, {
+      status: 'Finished'
+    })
+
+    res.status(200).json({message: 'Complaint finshed successfully', complaint: updatedComplaint})
+  }
+  catch(error) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+    }
+}
+
+export default {
+  login,
+  register,
+  registerComplaint,
+  getComplaint,
+  closeComplaint,
+  getBookings,
+  getComplaints,
+}

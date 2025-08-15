@@ -4,9 +4,6 @@ import { authMiddleware } from "../middlewares/user_middleware.js";
 import authenticateToken from "../middlewares/authenticate_token.js";
 
 const router = express.Router();
-router.get("", (req, res) => {
-  res.send('API is running...');
-})
 
 // Public routes
 router.post("/register", userController.register);

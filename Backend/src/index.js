@@ -1,6 +1,8 @@
 // index.js
 import express from 'express';
 import dotenv from 'dotenv';
+import fileUpload from "express-fileupload";
+import { v2 as cloudinary } from 'cloudinary';
 import connectDb from './db/index.js';
 import userRoutes from "./routes/user_route.js";
 import cookieParser from "cookie-parser";
@@ -14,6 +16,16 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(fileUpload({ useTempFiles: true }));
+
+// Configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUD_API_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRAT
+});
+
+
 
 // User routes
 app.use("/api/users", userRoutes);

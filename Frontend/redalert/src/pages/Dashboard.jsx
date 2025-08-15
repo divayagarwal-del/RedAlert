@@ -56,7 +56,8 @@ const Dashboard = () => {
   {cardData.map((metric, index) => (
     <Card
       key={index}
-      className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-red-800 to-red-600 text-white aspect-square shadow-lg rounded-2xl"
+      
+      className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#E5CDFB] to-[#AF8FE9] text-white aspect-square shadow-lg rounded-2xl"
     >
       <div className="mb-4 drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]">
         {React.cloneElement(metric.icon, { sx: { fontSize: 67 } })} 
@@ -88,7 +89,7 @@ const Dashboard = () => {
               {
                 dataKey: 'revenue',
                 label: 'Revenue',
-                color: '#dc2626',
+                color: '#AF8FE9',
                 // color: (index) => {
                 //   // Shades from red-800 → red-600
                 //   const shades = [
@@ -136,12 +137,12 @@ const Dashboard = () => {
                   ...item,
                   color: (() => {
                     const shades = [
-                      '#991b1b', // red-800
-                      '#b91c1c',
-                      '#dc2626',
-                      '#ef4444',
-                      '#f87171',
-                    ];
+  '#E5CDFB', // Pale Lavender
+  '#CC8DE9', // Bright Lilac
+  '#AF8FE9', // Bright Lavender (base)
+  '#B496EA', // Slightly darker tint
+  '#9B74E3'  // Even darker shade
+];
                     return shades[index % shades.length];
                   })(),
                 })),

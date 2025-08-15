@@ -76,10 +76,10 @@ const DataTable = () => {
       <Box component="main" sx={{ flexGrow: 1 }}>
         <AppBar
           position="static"
-          sx={{ backgroundColor: 'white', boxShadow: 0, borderBottom: '4px solid red' }}
+          sx={{ backgroundColor: 'white', boxShadow: 0, borderBottom: '4px solid #AF8FE9' }}
         >
           <Toolbar sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <Typography variant="h6" sx={{ color: 'red', fontWeight: 'bold' }}>
+            <Typography variant="h6" sx={{ color: '#AF8FE9', fontWeight: 'bold' }}>
               Data Table
             </Typography>
           </Toolbar>

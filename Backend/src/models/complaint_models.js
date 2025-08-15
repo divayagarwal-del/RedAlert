@@ -14,17 +14,17 @@ const ComplaintSchema = new mongoose.Schema(
       required: true
     },
     roomsIds: [
-  {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Room"
-  }
-],
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Room"
+      }
+    ],
     description: {
       type: String,
       required: true
     },
     images: [{
-        type: String,
+      type: String,
     }],
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -33,7 +33,7 @@ const ComplaintSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['New', 'Accepted', 'Waiting','Finished'],
+      enum: ['New', 'Accepted', 'Waiting', 'Finished'],
       default: "New"
     }
   },

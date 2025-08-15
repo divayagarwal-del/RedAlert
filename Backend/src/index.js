@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDb from './db/index.js';
 import userRoutes from "./routes/user_route.js";
 import cookieParser from "cookie-parser";
+import adminRoutes from "./routes/auth_route.js";
 
 // Load environment variables
 dotenv.config();
@@ -16,12 +17,12 @@ app.use(cookieParser());
 
 // User routes
 app.use("/api/users", userRoutes);
-
+app.use("/api/admin", adminRoutes);
 // Connect to database
 
 connectDb();
 // Test route
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.send('API is running...');
 });
 

@@ -1,92 +1,233 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SideNavbar from "../components/SideNav";
+import { Tag, Button, Spin, message } from "antd";
+import { Box, AppBar, Toolbar, Typography } from '@mui/material';
+import dayjs from 'dayjs';
 
 export default function IssueDetails() {
   const { id } = useParams();
   const [issue, setIssue] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchIssue = async () => {
-      const response = await fetch("/issues.json");
-      const data = await response.json();
-      const foundIssue = data.find((item) => item.id === Number(id));
-      setIssue(foundIssue);
+      try {
+        setLoading(true);
+        // Fetch the specific complaint from your backend API
+        const response = await fetch(`http://localhost:8000/api/admin/getComplaint/${id}`);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch complaint data');
+        }
+        
+        const data = await response.json();
+        setIssue(data.complaint);
+      } catch (err) {
+        console.error('Error fetching issue:', err);
+        setError(err.message);
+        message.error('Failed to load complaint data');
+      } finally {
+        setLoading(false);
+      }
     };
-    fetchIssue();
+
+    if (id) {
+      fetchIssue();
+    }
   }, [id]);
 
-  if (issue === null) {
-    return <div className="p-6">Loading...</div>;
+  const handleAccept = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/admin/acceptComplaint/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update status');
+      }
+
+      message.success('Complaint status updated successfully');
+      // Refresh the issue data
+      const updatedResponse = await fetch(`http://localhost:8000/api/admin/getComplaint/${id}`);
+      const updatedData = await updatedResponse.json();
+      setIssue(updatedData.complaint);
+    } catch (err) {
+      console.error('Error updating status:', err);
+      message.error('Failed to update complaint status');
+    }
+  };
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <SideNavbar />
+        <Box component="main" sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Spin size="large" />
+        </Box>
+      </Box>
+    );
   }
-  if (!issue) {
-    return <div className="p-6">Issue not found</div>;
+
+  if (error || !issue) {
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <SideNavbar />
+        <Box component="main" sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Typography variant="h6" color="error">
+            {error || 'Complaint not found'}
+          </Typography>
+        </Box>
+      </Box>
+    );
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
+    <Box sx={{ display: 'flex' }}>
       <SideNavbar />
-
-      {/* Main Content */}
-      <div className="flex-grow">
+      <Box component="main" sx={{ flexGrow: 1 }}>
         {/* Top App Bar */}
-        <div className="bg-white border-b-4 border-[#af8fe9] shadow-sm">
-          <div className="px-6 py-4">
-            <h1 className="text-xl font-bold text-[#af8fe9]">#{issue.id}</h1>
-          </div>
-        </div>
+        <AppBar
+          position="static"
+          sx={{
+            backgroundColor: 'white',
+            boxShadow: 0,
+            borderBottom: '4px solid #AF8FE9',
+          }}
+        >
+          <Toolbar sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <Typography
+              variant="h6"
+              sx={{ color: '#AF8FE9', fontWeight: 'bold' }}
+            >
+              Complaint #{issue._id?.slice(-6) || 'N/A'}
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
         {/* Page Body */}
-        <div className="p-6 space-y-6">
-          {/* Service Title */}
-          <h1 className="text-3xl font-bold text-gray-800">{issue.title}</h1>
+        <Box sx={{ padding: 3, maxWidth: '1200px', margin: '0 auto' }}>
+          {/* Complaint Title */}
+          <Typography variant="h4" sx={{ fontWeight: 'bold', color: 'gray.800', mb: 3 }}>
+            {issue.title}
+          </Typography>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-3">
-            {issue.tags.map((tag, index) => (
-              <span
-                key={index}
-                className={`px-4 py-1 rounded-full text-sm font-medium ${tag.color}`}
-              >
-                {tag.text}
-              </span>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 4 }}>
+            {issue.tags && issue.tags.map((tag, index) => (
+              <Tag color="blue" key={index} style={{ fontSize: '14px', padding: '4px 12px' }}>
+                {tag}
+              </Tag>
             ))}
-          </div>
+          </Box>
 
           {/* Description & Images */}
-          <div className="grid grid-cols-5 gap-6">
+          <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: 4 }}>
             {/* Left - Description */}
-            <div className="col-span-3">
-              <p className="whitespace-pre-wrap text-gray-700 text-lg leading-relaxed">
+            <Box>
+              <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+                Description
+              </Typography>
+              <Typography 
+                variant="body1" 
+                sx={{ 
+                  color: 'gray.700', 
+                  lineHeight: 1.7, 
+                  whiteSpace: 'pre-wrap',
+                  mb: 4 
+                }}
+              >
                 {issue.description}
-              </p>
+              </Typography>
 
               {/* Timestamp + Accept Button */}
-              <div className="flex items-center justify-between mt-8">
-                <span className="text-gray-600 font-medium">
-                  Raised: {issue.timestamp}
-                </span>
-                <button className="bg-[#af8fe9] hover:bg-[#946fd1] text-white px-6 py-2 rounded-lg font-semibold transition-colors">
-                  Accept
-                </button>
-              </div>
-            </div>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 4 }}>
+                <Typography variant="body2" sx={{ color: 'gray.600', fontWeight: 'medium' }}>
+                  Raised: {dayjs(issue.createdAt).format('YYYY-MM-DD HH:mm')}
+                </Typography>
+                {issue.status === 'New' && (
+                  <Button 
+                    type="primary" 
+                    onClick={handleAccept}
+                    style={{ 
+                      backgroundColor: '#AF8FE9', 
+                      borderColor: '#AF8FE9',
+                      borderRadius: '8px',
+                      padding: '8px 24px',
+                      height: 'auto'
+                    }}
+                  >
+                    Accept
+                  </Button>
+                )}
+                {issue.status !== 'New' && (
+                  <Tag 
+                    color={issue.status === 'Accepted' ? 'green' : 'gold'}
+                    style={{ fontSize: '14px', padding: '4px 12px' }}
+                  >
+                    {issue.status}
+                  </Tag>
+                )}
+              </Box>
+            </Box>
 
             {/* Right - Images */}
-            <div className="col-span-2 flex flex-col gap-4 items-center">
-              {issue.images.map((src, idx) => (
-                <img
-                  key={idx}
-                  src={src}
-                  alt={`Issue Image ${idx + 1}`}
-                  className="w-4/5 h-auto object-cover rounded-lg shadow-md"
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'center' }}>
+              <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold', alignSelf: 'flex-start' }}>
+                Images
+              </Typography>
+              {issue.images && issue.images.length > 0 ? (
+                issue.images.map((src, idx) => (
+                  <img
+                    key={idx}
+                    src={src}
+                    alt={`Complaint Image ${idx + 1}`}
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      objectFit: 'cover',
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                    }}
+                  />
+                ))
+              ) : (
+                <Typography variant="body2" sx={{ color: 'gray.500', fontStyle: 'italic' }}>
+                  No images attached
+                </Typography>
+              )}
+            </Box>
+          </Box>
+
+          {/* Additional Details */}
+          <Box sx={{ mt: 4, p: 3, backgroundColor: 'gray.50', borderRadius: '8px' }}>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
+              Additional Details
+            </Typography>
+            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 2 }}>
+              <Box>
+                <Typography variant="body2" sx={{ color: 'gray.600' }}>
+                  User ID: {issue.user}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="body2" sx={{ color: 'gray.600' }}>
+                  Status: {issue.status}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant="body2" sx={{ color: 'gray.600' }}>
+                  Created: {dayjs(issue.createdAt).format('YYYY-MM-DD HH:mm')}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }

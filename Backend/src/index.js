@@ -7,6 +7,7 @@ import connectDb from './db/index.js';
 import userRoutes from "./routes/user_route.js";
 import cookieParser from "cookie-parser";
 import adminRoutes from "./routes/admin_route.js";
+import cors from 'cors';
 
 // Load environment variables
 dotenv.config();
@@ -25,7 +26,10 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRAT
 });
 
-
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 
 // User routes
 app.use("/api/users", userRoutes);

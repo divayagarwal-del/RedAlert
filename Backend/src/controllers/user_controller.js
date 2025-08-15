@@ -4,11 +4,11 @@ import { User } from "../models/user_models.js";
 import { Complaint } from "../models/complaint_models.js";
 import bookings from "../models/bookings.js";
 import { Review } from "../models/review_models.js";
-
+import { v2 as cloudinary } from 'cloudinary';
 // REGISTER
 const register = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, number } = req.body;
 
     // Check if user exists
     const existingUser = await User.findOne({ username });
@@ -20,7 +20,7 @@ const register = async (req, res) => {
     const passwordHash = await bcrypt.hash(password, 10);
 
     // Create user in DB
-    const newUser = new User({ username, password: passwordHash });
+    const newUser = new User({ username, password: passwordHash, phnNumber: number });
     await newUser.save();
 
     res.status(201).json({ message: "User registered successfully" });
@@ -99,14 +99,29 @@ async function getBookings(req, res) {
 
 const registerComplaint = async (req, res) => {
   try {
-    const { title, tags, description, photos, roomIds } = req.body;
+    const { title, tags, description, roomIds } = req.body;
     const userId = req.user.id; // comes from auth middleware after JWT verify
+    const uploadedImages = [];
+
+    // image upload fn's 
+    if (req.files && req.files.images) {
+      const imageFiles = Array.isArray(req.files.images)
+        ? req.files.images
+        : [req.files.images];
+
+      for (const file of imageFiles) {
+        const uploadRes = await cloudinary.uploader.upload(file.tempFilePath, { folder: "complaints" });
+        uploadedImages.push(uploadRes.secure_url);
+      }
+    }
 
     const complaint = new Complaint({
       title,
       tags,
       description,
-      user: userId
+      user: userId,
+      images: uploadedImages
+
     });
 
     await complaint.save();

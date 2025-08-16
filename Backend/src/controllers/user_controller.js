@@ -58,7 +58,7 @@ const login = async (req, res) => {
       // maxAge: 10 * 1000        // 10 seconds in milliseconds
     });
 
-    res.json({ message: "Login successful" });
+    res.json({ message: "Login successful", token: token });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -176,6 +176,19 @@ async function addReview(req, res) {
 
 }
 
+async function trackStatus(req, res) {
+  try {
+    const { complaintId } = req.params;
+    const complaint = await Complaint.findById(complaintId);
+    const status = complaint.status;
+    res.status(200).json({ message: "Status Fetched Sucessfully", status: status });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" })
+  }
+}
+
 export default {
   login,
   register,
@@ -184,5 +197,6 @@ export default {
   closeComplaint,
   getBookings,
   getComplaints,
-  addReview
+  addReview,
+  trackStatus
 }

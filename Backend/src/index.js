@@ -18,13 +18,14 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(fileUpload({ useTempFiles: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Configuration
-cloudinary.config({
-  cloud_name: process.env.CLOUD_API_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRAT
-});
+// cloudinary.config({
+//   cloud_name: process.env.CLOUD_API_NAME,
+//   api_key: process.env.CLOUD_API_KEY,
+//   api_secret: process.env.CLOUD_API_SECRAT
+// });
 
 app.use(cors({
   origin: 'http://localhost:3000',

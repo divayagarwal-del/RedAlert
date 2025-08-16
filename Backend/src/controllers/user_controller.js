@@ -99,34 +99,21 @@ async function getBookings(req, res) {
 
 const registerComplaint = async (req, res) => {
   try {
-    const { title, tags, description, roomIds } = req.body;
-    const userId = req.user.id; // comes from auth middleware after JWT verify
-    const uploadedImages = [];
+    console.log("BODY:", req.body);
 
-    // image upload fn's 
-    if (req.files && req.files.images) {
-      const imageFiles = Array.isArray(req.files.images)
-        ? req.files.images
-        : [req.files.images];
-
-      for (const file of imageFiles) {
-        const uploadRes = await cloudinary.uploader.upload(file.tempFilePath, { folder: "complaints" });
-        uploadedImages.push(uploadRes.secure_url);
-      }
-    }
+    const { title, tags, description, roomsIds } = req.body;
+    const userId = req.user.id; // from JWT
 
     const complaint = new Complaint({
       title,
       tags,
       description,
-      user: userId,
-      images: uploadedImages
-
+      roomsIds,
+      user: userId
     });
 
     await complaint.save();
 
-    // Also store complaint reference in user's complaints array
     await User.findByIdAndUpdate(userId, {
       $push: { complaints: complaint._id }
     });
@@ -137,7 +124,6 @@ const registerComplaint = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 async function getComplaint(req, res) {
   const { complaintId } = req.params;
   try {

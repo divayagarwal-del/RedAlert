@@ -14,6 +14,4 @@ router.get("/getComplaint/:complaintId", authenticateToken, userController.getCo
 router.get("/getBookings", authenticateToken, userController.getBookings);
 router.post("/closeComplaint/:complaintId", authenticateToken, userController.closeComplaint);
 router.post("/addReview/:complaintId", authenticateToken, userController.addReview);
-
-
 export default router;

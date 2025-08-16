@@ -4,12 +4,14 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Box, Typog
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import ListAltIcon from '@mui/icons-material/ListAlt'; // Icon for Logs
+import BookOnlineIcon from '@mui/icons-material/BookOnline'; // Icon for Bookings
 
 const drawerWidth = 240;
 
 const navItems = [
   { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
   { text: 'Data Table', icon: <TableChartIcon />, path: '/datatable' },
+  { text: 'Bookings', icon: <BookOnlineIcon />, path: '/bookings' }, // ✅ New menu item
   { text: 'Logs', icon: <ListAltIcon />, path: '/logs' }, // ✅ New menu item
 ];
 

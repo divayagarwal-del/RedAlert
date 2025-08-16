@@ -1,9 +1,10 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
+
 import Dashboard from './pages/Dashboard';
 import DataTable from './pages/DataTable';
+import Bookings from './pages/bookings';
 import Hero from "./pages/Hero"
 import IssueDetails from "./pages/Issue1";
 import Logs from "./pages/finallog"
@@ -15,6 +16,7 @@ const App = () => (
       <Route path="/" element={<Hero />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/datatable" element={<DataTable />} />
+      <Route path="/bookings" element={<Bookings />} />
       {/* <Route path="/issue1" element={<Issue1 />} /> */}
       <Route path="/issue/:id" element={<IssueDetails />} />
       <Route path="/logs" element={<Logs />} /> 

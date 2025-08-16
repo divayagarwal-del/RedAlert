@@ -59,7 +59,7 @@ const bookings = [
     "checkInDate": "2025-09-05",
     "checkOutDate": "2025-09-07",
     "guests": 2,
-    "status": "cancelled",
+    "status": "cancerled",
     "totalPrice": 0
   },
   {

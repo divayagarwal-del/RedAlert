@@ -1,12 +1,15 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const RoomSchema = new mongoose.Schema({
+    roomNo: {
+        type: String,
+    },
+    roomName: {
+        type: String,
+    },
     prevCompTags: [{ type: String }],
-    UserId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    status: { type: String, enum: ['occupied', 'vacant'], default: 'vacant' }
-})
+    UserId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    status: { type: String, enum: ["occupied", "vacant"], default: "vacant" },
+});
 
-export const Room = mongoose.model("Room", RoomSchema)
-
-
-  
+export const Room = mongoose.model("Room", RoomSchema);

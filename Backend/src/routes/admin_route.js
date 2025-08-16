@@ -14,5 +14,7 @@ router.get("/getComplaint/:complaintId", auth_route.getComplaint); // done
 router.post("/waitingComplaint/:complaintId", auth_route.waitingComplaint); // done
 router.get("/listOfUsers", auth_route.listOfUsers)// done 
 router.get("/listBookings", auth_route.listOfBookings); // done
+router.get("/getComplaintTagsStats", auth_route.getComplaintTagsStats); // new endpoint for tags statistics
+router.get("/getMonthlyComplaintStats", auth_route.getMonthlyComplaintStats); // new endpoint for monthly complaint statistics
 
 export default router;

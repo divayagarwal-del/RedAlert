@@ -118,6 +118,86 @@ async function listOfBookings(req, res) {
         res.status(500).json({ message: "Server error" });
     }
 }
+
+async function getComplaintTagsStats(req, res) {
+    try {
+        const complaints = await Complaint.find({});
+        
+        // Count all tags from all complaints
+        const tagCounts = {};
+        let totalComplaints = 0;
+        
+        complaints.forEach(complaint => {
+            if (complaint.tags && Array.isArray(complaint.tags)) {
+                complaint.tags.forEach(tag => {
+                    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+                });
+                totalComplaints++;
+            }
+        });
+        
+        // Convert to array format for the pie chart
+        const tagsData = Object.entries(tagCounts).map(([tag, count], index) => ({
+            id: index,
+            label: tag,
+            value: count
+        }));
+        
+        res.status(200).json({
+            message: "Complaint tags statistics fetched successfully",
+            tagsData,
+            totalComplaints,
+            tagCounts
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
+async function getMonthlyComplaintStats(req, res) {
+    try {
+        const complaints = await Complaint.find({});
+        
+        // Initialize monthly data for the last 12 months
+        const monthlyData = {};
+        const currentDate = new Date();
+        
+        // Create entries for the last 12 months
+        for (let i = 11; i >= 0; i--) {
+            const date = new Date(currentDate.getFullYear(), currentDate.getMonth() - i, 1);
+            const monthKey = date.toLocaleString('default', { month: 'short' });
+            monthlyData[monthKey] = 0;
+        }
+        
+        // Count complaints by month based on createdAt timestamp
+        complaints.forEach(complaint => {
+            if (complaint.createdAt) {
+                const complaintDate = new Date(complaint.createdAt);
+                const monthKey = complaintDate.toLocaleString('default', { month: 'short' });
+                if (monthlyData.hasOwnProperty(monthKey)) {
+                    monthlyData[monthKey]++;
+                }
+            }
+        });
+        
+        // Convert to array format for the bar chart
+        const monthlyComplaintsData = Object.entries(monthlyData).map(([month, count]) => ({
+            month: month,
+            complaints: count
+        }));
+        
+        res.status(200).json({
+            message: "Monthly complaint statistics fetched successfully",
+            monthlyComplaintsData,
+            totalComplaints: complaints.length
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
 export default {
     getComplaint,
     getComplaints,
@@ -125,5 +205,7 @@ export default {
     updateComplaintStatus,
     waitingComplaint,
     listOfBookings,
-    listOfUsers
+    listOfUsers,
+    getComplaintTagsStats,
+    getMonthlyComplaintStats
 }

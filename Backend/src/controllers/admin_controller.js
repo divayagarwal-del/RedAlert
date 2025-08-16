@@ -76,7 +76,17 @@ async function listOfUsers(req, res) {
 }
 
 async function listOfBookings(req, res) {
-    res.status(200).json({ message: 'List og bookings fetched successfully', bookings })
+    try {
+        // Since bookings is just an array, we'll return it directly
+        // In a real application, this would be fetched from a database
+        res.status(200).json({ 
+            message: 'List of bookings fetched successfully', 
+            bookings: bookings 
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
 }
 export default {
     getComplaint,

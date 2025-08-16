@@ -8,7 +8,7 @@ async function acceptComplaint(req, res) {
     try {
         const updatedComplaint = await Complaint.findByIdAndUpdate(complaintId, {
             status: "Accepted"
-        })
+        }, { new: true })
 
         res.status(200).json({ message: 'Complaint Accepted successfully', complaint: updatedComplaint })
     }
@@ -18,6 +18,36 @@ async function acceptComplaint(req, res) {
         res.status(500).json({ message: "Server error" });
     }
 }
+
+async function updateComplaintStatus(req, res) {
+    const { complaintId } = req.params;
+    const { status } = req.body;
+    
+    try {
+        // Validate status
+        const validStatuses = ['New', 'Accepted', 'Finished', 'Waiting'];
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ message: 'Invalid status provided' });
+        }
+
+        const updatedComplaint = await Complaint.findByIdAndUpdate(complaintId, {
+            status: status
+        }, { new: true });
+
+        if (!updatedComplaint) {
+            return res.status(404).json({ message: 'Complaint not found' });
+        }
+
+        res.status(200).json({ 
+            message: `Complaint status updated to ${status} successfully`, 
+            complaint: updatedComplaint 
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
 async function getComplaints(req, res) {
     try {
         const complaints = await Complaint.find({});
@@ -92,6 +122,7 @@ export default {
     getComplaint,
     getComplaints,
     acceptComplaint,
+    updateComplaintStatus,
     waitingComplaint,
     listOfBookings,
     listOfUsers

@@ -8,6 +8,7 @@ const router = express.Router();
 
 
 router.post("/acceptComplaint/:complaintId", auth_route.acceptComplaint); // done 
+router.post("/updateComplaintStatus/:complaintId", auth_route.updateComplaintStatus); // new endpoint for status progression
 router.get("/getComplaints", auth_route.getComplaints); // done 
 router.get("/getComplaint/:complaintId", auth_route.getComplaint); // done
 router.post("/waitingComplaint/:complaintId", auth_route.waitingComplaint); // done

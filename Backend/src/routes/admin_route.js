@@ -1,8 +1,7 @@
 // src/routes/complaint_routes.js
 import express from "express";
 import auth_route from "../controllers/admin_controller.js";
-
-
+import review_route from "../controllers/review_controller.js"
 const router = express.Router();
 
 
@@ -16,5 +15,7 @@ router.get("/listOfUsers", auth_route.listOfUsers)// done
 router.get("/listBookings", auth_route.listOfBookings); // done
 router.get("/getComplaintTagsStats", auth_route.getComplaintTagsStats); // new endpoint for tags statistics
 router.get("/getMonthlyComplaintStats", auth_route.getMonthlyComplaintStats); // new endpoint for monthly complaint statistics
+router.get("/getReview/:complaintId", review_route.getReview);
+router.get("/getReveiws", review_route.getReviews);
 
 export default router;

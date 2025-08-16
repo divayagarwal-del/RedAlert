@@ -40,18 +40,31 @@ export default function IssueDetails() {
 
   const handleAccept = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/admin/acceptComplaint/${id}`, {
+      let newStatus = 'Accepted';
+      
+      // Determine the next status based on current status
+      if (issue.status === 'New') {
+        newStatus = 'Accepted';
+      } else if (issue.status === 'Accepted') {
+        newStatus = 'Finished';
+      } else {
+        // If already finished, don't allow further changes
+        return;
+      }
+
+      const response = await fetch(`http://localhost:8000/api/admin/updateComplaintStatus/${id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ status: newStatus }),
       });
 
       if (!response.ok) {
         throw new Error('Failed to update status');
       }
 
-      message.success('Complaint status updated successfully');
+      message.success(`Complaint status updated to ${newStatus}`);
       // Refresh the issue data
       const updatedResponse = await fetch(`http://localhost:8000/api/admin/getComplaint/${id}`);
       const updatedData = await updatedResponse.json();
@@ -60,6 +73,38 @@ export default function IssueDetails() {
       console.error('Error updating status:', err);
       message.error('Failed to update complaint status');
     }
+  };
+
+  // Function to get button properties based on status
+  const getButtonProps = (status) => {
+    if (status === 'New') {
+      return {
+        text: 'Accept',
+        backgroundColor: '#AF8FE9',
+        borderColor: '#AF8FE9',
+        clickable: true
+      };
+    } else if (status === 'Accepted') {
+      return {
+        text: 'Finish',
+        backgroundColor: '#FFD700', // Yellow
+        borderColor: '#FFD700',
+        clickable: true
+      };
+    } else if (status === 'Finished') {
+      return {
+        text: 'Finished',
+        backgroundColor: '#FF4444', // Red
+        borderColor: '#FF4444',
+        clickable: false
+      };
+    }
+    return {
+      text: 'Unknown',
+      backgroundColor: '#CCCCCC',
+      borderColor: '#CCCCCC',
+      clickable: false
+    };
   };
 
   if (loading) {
@@ -149,29 +194,27 @@ export default function IssueDetails() {
                 <Typography variant="body2" sx={{ color: 'gray.600', fontWeight: 'medium' }}>
                   Raised: {dayjs(issue.createdAt).format('YYYY-MM-DD HH:mm')}
                 </Typography>
-                {issue.status === 'New' && (
-                  <Button 
-                    type="primary" 
-                    onClick={handleAccept}
-                    style={{ 
-                      backgroundColor: '#AF8FE9', 
-                      borderColor: '#AF8FE9',
-                      borderRadius: '8px',
-                      padding: '8px 24px',
-                      height: 'auto'
-                    }}
-                  >
-                    Accept
-                  </Button>
-                )}
-                {issue.status !== 'New' && (
-                  <Tag 
-                    color={issue.status === 'Accepted' ? 'green' : 'gold'}
-                    style={{ fontSize: '14px', padding: '4px 12px' }}
-                  >
-                    {issue.status}
-                  </Tag>
-                )}
+                {issue && (() => {
+                  const buttonProps = getButtonProps(issue.status);
+                  return (
+                    <Button 
+                      type="primary" 
+                      onClick={handleAccept}
+                      disabled={!buttonProps.clickable}
+                      style={{ 
+                        backgroundColor: buttonProps.backgroundColor, 
+                        borderColor: buttonProps.borderColor,
+                        borderRadius: '8px',
+                        padding: '8px 24px',
+                        height: 'auto',
+                        cursor: buttonProps.clickable ? 'pointer' : 'not-allowed',
+                        opacity: buttonProps.clickable ? 1 : 0.6
+                      }}
+                    >
+                      {buttonProps.text}
+                    </Button>
+                  );
+                })()}
               </Box>
             </Box>
 
